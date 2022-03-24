@@ -2,3 +2,10 @@
     --color-primary: #03A9F3;
     --color-secondary: #ea1e63;
 }
+
+@media (max-width: 800px) {
+    :root {
+        --color-primary: green;
+        --color-secondary: pink;
+    }
+}
