@@ -8,13 +8,21 @@
     display: inline-block;
     width: 600px;
     margin: 0 calc(50% - 300px);
-    background-color: yellow;
 }
 .row-big {
     display: inline-block;
     width: 1000px;
     margin: 0 calc(50% - 500px);
-    background-color: orange;
+}
+
+.left-column {
+    width: 50%;
+    float: left;
+}
+
+.right-column {
+    width: 40%;
+    float: right;
 }
 
 @media (max-width: 1100px) {
@@ -28,6 +36,13 @@
     .row-big {
         width: 600px;
         margin: 0 calc(50% - 300px);
+    }
+    .left-column {
+        width: 100%;
+    }
+    .right-column {
+        width: 100%;
+        margin-top: 50px;
     }
 }
 
