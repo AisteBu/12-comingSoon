@@ -4,6 +4,7 @@
 @import './base/layout.css';
 
 /* 3rd party */
+@import './3rd-party/font-awesome.min.css';
 
 /* components */
 @import './components/button.css';
@@ -58,6 +59,30 @@
 
 
 /* MAIN FOOTER SECTION */
+.socials {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 15px;
+    border-bottom: 1px solid var(--color-light);
+}
+.socials > .fa {
+    color: var(--color-light);
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 24px;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: all 0.5s;
+}
+.socials > .fa:hover {
+    background-color: var(--color-light);
+    color: var(--color-primary);
+}
+
 footer.container {
     padding-top: 0;
 }
