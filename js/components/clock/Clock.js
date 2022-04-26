@@ -12,7 +12,7 @@ class Clock {
         if (!this.isValidSelector()) {
             return false;
         }
-
+        
         this.render();
     }
 
@@ -50,8 +50,57 @@ class Clock {
         return updatedTime;
     }
 
+    calcDeadline() {
+        const dabartinisLaikas = new Date();
+        const einamiejiMetai = dabartinisLaikas.getFullYear();
+
+        let numanomaGimtadienioData = einamiejiMetai + '-' + this.targetDate;
+        let numanomasLaikas = new Date(numanomaGimtadienioData);
+        // vietoj const rasom let, jei norim issitraukti duomenis. I if nukopijuojame eilute be let, ir console.log irasom pirmaja reiksme
+
+        const dabartinesMilisekundes = dabartinisLaikas.getTime();
+        let numanomosMilisekundes = numanomasLaikas.getTime();
+
+        if (dabartinesMilisekundes > numanomosMilisekundes)  { 
+            numanomaGimtadienioData = (einamiejiMetai + 1) + '-' + this.targetDate;
+            numanomasLaikas = new Date(numanomaGimtadienioData);
+            numanomosMilisekundes = numanomasLaikas.getTime();
+        }
+
+        const likusiosMilisekundes = numanomosMilisekundes - dabartinesMilisekundes;
+        let likusiosSekundes = Math.floor(likusiosMilisekundes / 1000); //suapvalinom
+        
+        const dienos = Math.floor(likusiosSekundes / 60 / 60 / 24);
+        likusiosSekundes -= dienos * 60 * 60 * 24;
+                
+        const valandos = Math.floor(likusiosSekundes / 60 / 60);
+        likusiosSekundes -= valandos * 60 * 60;
+                
+        const minutes = Math.floor(likusiosSekundes / 60);
+        likusiosSekundes -= minutes * 60;
+
+        return [dienos, valandos, minutes, likusiosSekundes];
+        // sita rezultata rodys  cia: init() ...->    this.calcDeadline();
+        
+        // issitraukiame "einamieji-metai" (2021)
+        // susikonstruojame einamuju metu gimtadienio (this.targetDate) laika (A)
+        // susikonstruojame einamaji (dabar) laika (B)
+        // palyginame laikus milisekundemis
+            // jeigu A < B, reiskia, mes jau esame po gimtadienio
+            // jeigu A > B, reiskia, gimtadienis dar tik laukia / ateina
+                //tokiu atveju, gimtadienis bus "einamieji-metai" ++ (2022)
+
+        // kadangi jau nustateme, kelintais metais pagal duota this.targetDate bus tas gimtadienis, tai:
+            // galime paskaiciuoti laiko skirtuma nuo "dabar" 
+            // apskaiciuoti, kiek milisekundziu skirtumas sudaro:
+                // dienu, valandu, minuciu, sekundziu
+
+            // apskaiciuotas laikas (d, v, m, s) grazinamas array formatu
+    }
+
     render() {
-        const timeValues = this.formatTime([432, 9, 37, 39]);
+        const timeValues = this.formatTime(this.calcDeadline()); // is init() istriname calcDeadline ir irasome cia
+        // dabar keiciasi pagrindinis laikrodis
         const labelValues = ['Days', 'Hours', 'Minutes', 'Seconds'];
         let HTML = '';
 
