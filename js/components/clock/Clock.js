@@ -4,6 +4,7 @@ class Clock {
         this.targetDate = targetDate;
 
         this.DOM = null;
+        this.allValuesDOM = null;
 
         this.init();
     }
@@ -14,6 +15,7 @@ class Clock {
         }
         
         this.render();
+        this.updateClock();
     }
 
     isValidSelector() {
@@ -98,6 +100,16 @@ class Clock {
             // apskaiciuotas laikas (d, v, m, s) grazinamas array formatu
     }
 
+    updateClock() {
+        setInterval(() => {
+            const timeValues = this.formatTime(this.calcDeadline());
+            for (let i = 0; i < 4; i++) {
+                this.allValuesDOM[i].innerText = timeValues[i];
+            }
+        }, 1000)
+    }
+
+
     render() {
         const timeValues = this.formatTime(this.calcDeadline()); // is init() istriname calcDeadline ir irasome cia
         // dabar keiciasi pagrindinis laikrodis
@@ -112,6 +124,7 @@ class Clock {
         }
 
         this.DOM.innerHTML = HTML;
+        this.allValuesDOM = this.DOM.querySelectorAll('.value');
     }
 
 }
